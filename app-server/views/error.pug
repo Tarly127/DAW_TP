@@ -1,0 +1,26 @@
+extends layout
+
+block content
+    .w3-top
+        .w3-bar.w3-theme-d2.w3-left-align.w3-large
+            // Ao clicar neste botão ir para o feed
+            a.w3-bar-item.w3-button.w3-padding-large.w3-hover-white(href='/users/home')
+                i.fa.fa-google.w3-margin-right
+                | myGoogleDrive
+            // Ao clicar neste botão ir para a página inicial (login/registo)
+            form(action='/users/logout' method='POST')
+                button.w3-bar-item.w3-button.w3-hide-small.w3-right.w3-padding-large.w3-hover-white(type='submit' title='Logout' style="background-color: Transparent;background-repeat:no-repeat;border: none;cursor:pointer;overflow: hidden;outline:none;")
+                    i.fa.fa-power-off
+    .w3-card-4(style="min-height: 100vh")
+        div.w3-container.w3-red
+          h1.w3-center
+            p Erro
+        div.w3-container.w3-red
+          h1.w3-center
+            p Erro
+        div.w3-container.w3-light-grey
+            h3.w3-center
+                p= e
+        footer.w3-container.w3-red
+          address(style="text-align:center")
+            a(href="/") Voltar à página principal

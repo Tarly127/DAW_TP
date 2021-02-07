@@ -1,0 +1,83 @@
+doctype html
+html
+  head
+    title myGoogleDrive
+    script(type="module")
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans')
+    link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css')
+    style
+      include ../public/stylesheets/rating.css
+    style.
+      .w3-theme-l5 {color:#000 !important; background-color:#ccff99 !important}
+      .w3-theme-l4 {color:#000 !important; background-color:#baf0ff !important}
+      .w3-theme-l3 {color:#000 !important; background-color:#33ffad !important}
+      .w3-theme-l2 {color:#000 !important; background-color:#00ff99 !important}
+      .w3-theme-l1 {color:#fff !important; background-color:#00e673 !important}
+      .w3-theme-d1 {color:#fff !important; background-color:#2d8659 !important}
+      .w3-theme-d2 {color:#fff !important; background-color:#339966 !important}
+      .w3-theme-d3 {color:#fff !important; background-color:#339966 !important}
+      .w3-theme-d4 {color:#fff !important; background-color:#339933 !important}
+      .w3-theme-d5 {color:#fff !important; background-color:#00cc66 !important}
+
+      .w3-theme-light {color:#000 !important; background-color:#ccff99 !important}
+      .w3-theme-dark {color:#fff !important; background-color:#00cc66 !important}
+      .w3-theme-action {color:#fff !important; background-color:#00cc66 !important}
+
+      .w3-theme {color:#fff !important; background-color:#00cc66 !important}
+      .w3-text-theme {color:#009900 !important}
+      .w3-border-theme {border-color:#009900 !important}
+
+      .w3-hover-theme:hover {color:#fff !important; background-color:#00cc99 !important}
+      .w3-hover-text-theme:hover {color:#00cc99 !important}
+      .w3-hover-border-theme:hover {border-color:#00cc99 !important}
+
+      html,body,h1,h2,h3,h4,h5 {font-family: "Open Sans", sans-serif}
+      body {background-color:#eaeafb;}
+      
+      .hr {
+        background-color: lightgrey !important;
+        color: lightgrey !important;
+        border: solid 1px lightgrey !important;
+        height: 1px !important;
+        margin-bottom: 12px;
+      }
+
+      textarea {
+        display:inline-block;
+        width: 575px;
+        min-height: 20px;
+        border: 1px solid #ccc;
+        max-height: 150px;
+        overflow-x: hidden;
+        overflow-y: auto;
+      }
+
+      .txt-container {
+        display:flex;
+        flex-direction: row;
+        margin-left:16px;
+      }
+        
+
+  script.
+      // Menu das features
+      function myFunction(id) {
+        var x = document.getElementById(id);
+        if (x.className.indexOf("w3-show") == -1) {
+          x.className += " w3-show";
+          x.previousElementSibling.className += "";
+        } 
+        else {
+          x.className = x.className.replace("w3-show", "");
+          x.previousElementSibling.className.replace(" w3-theme-d1", "");
+        }
+      }  
+
+      function alert(mensagem)
+      {
+        alert(mensagem)
+      }
+      
+  body
+    block content

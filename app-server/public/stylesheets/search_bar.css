@@ -1,0 +1,22 @@
+.search-container {
+    float: right;
+}
+.search-container button {
+    float: right;
+    padding: 7px 10px;
+    margin-top: 0px;
+    margin-right: 16px;
+    background: light-grey;
+    font-size: 10px;
+    border: none;
+    cursor: pointer;
+}
+.search-container button:hover {
+    background: #ccc;
+}
+.search-container input[type=text] {
+    padding: 4px;
+    font-size: 14px;
+    border: none;
+    width: 400px;
+}

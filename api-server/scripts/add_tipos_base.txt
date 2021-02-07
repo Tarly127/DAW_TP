@@ -1,0 +1,12 @@
+db.tipos.insertMany([
+    { descricao : "relatório" },
+    { descricao : "tese" },
+    { descricao : "artigo" },
+    { descricao : "aplicação" },
+    { descricao : "slides" },
+    { descricao : "teste" },
+    { descricao : "exame" },
+    { descricao : "problema resolvido" },
+    { descricao : "livro" },
+    { descricao : "ficha" }
+])

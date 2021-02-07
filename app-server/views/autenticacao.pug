@@ -1,0 +1,41 @@
+extends layout
+
+block content
+  .w3-card-4(style="min-height: 100vh")
+    header.w3-container.w3-theme-d2
+      h1 myGoogleDrive
+    .w3-container
+      .w3-row
+        .w3-col.m6
+          .w3-container
+            h3.w3-container Registo
+            form.w3-container(action='/users/registar' method='POST')
+              input.w3-input.w3-border(name='nome' type='text' placeholder='Nome')
+              br
+              input.w3-input.w3-border(name='email' type='email' placeholder='Email')
+              br
+              input.w3-input.w3-border(name='password' type='password' placeholder='Password')
+              br
+              input(name="filiacao" type="radio" value="Estudante")
+              | &nbsp;Estudante &nbsp;&nbsp;
+              input(name="filiacao" type="radio" value="Docente")
+              | &nbsp;Docente &nbsp;&nbsp;
+              input(name="filiacao" type="radio" value="Departamento")
+              | &nbsp;Departamento &nbsp;&nbsp;
+              input(name="filiacao" type="radio" value="Curso")
+              | &nbsp;Curso
+              br
+              br
+              input.w3-btn.w3-theme-d2(type='submit' value='registar')
+              br
+        .w3-col.m6
+          .w3-container
+            h3.w3-container Login
+            form.w3-container(action='/users/login' method='POST')
+              input.w3-input.w3-border(name='email' type='email' placeholder='Email')
+              br
+              input.w3-input.w3-border(name='password' type='password' placeholder='Password')
+              br
+              input.w3-btn.w3-theme-d2(type='submit' value='login')
+              br
+          

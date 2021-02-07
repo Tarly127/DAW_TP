@@ -1,0 +1,272 @@
+extends layout
+
+block content
+  .w3-top
+        .w3-bar.w3-theme-d2.w3-left-align.w3-large
+            // Ao clicar neste botão ir para o feed
+            form(action='/users/home' method='GET')
+              button.w3-bar-item.w3-button.w3-padding-large.w3-hover-white(href='/users/home')
+                i.fa.fa-google.w3-margin-right
+                | myGoogleDrive
+            //Pesquisar    
+            .w3-bar-item.w3-hide-small.w3-padding-large(style='margin-left:42px')
+                .search-container
+                    form(action='/users/recursos/com')
+                        input(type='text' placeholder='Pesquisar título...' name='titulo')
+                        | &nbsp;
+                        button.w3-button.w3-hover-white(type='submit')
+                            i.fa.fa-search        
+            // Ao clicar neste botão ir para a página inicial (login/registo)
+            form(action='/users/logout' method='POST')
+                button.w3-bar-item.w3-button.w3-hide-small.w3-right.w3-padding-large.w3-hover-white(type='submit' title='Logout' style="background-color: Transparent;background-repeat:no-repeat;border: none;cursor:pointer;overflow: hidden;outline:none;")
+                    i.fa.fa-power-off
+  // Page Container
+  .w3-container.w3-content(style='max-width:1400px;margin-top:80px')
+            // The Grid
+            .w3-row
+                // Left column
+                .w3-col.m3
+                    // Perfil
+                    .w3-card.w3-round.w3-white
+                        h4.w3-center Perfil
+                        .w3-container
+                            p
+                               i.fa.fa-male.fa-fw.w3-margin-right.w3-text-theme
+                               span=user.nome
+                            p
+                               i.fa.fa-at.fa-fw.w3-margin-right.w3-text-theme
+                               span=user.email
+                            // Para o admin   
+                            -if(user.nivel == 0) 
+                                p
+                                    i.fa.fa-pencil.fa-fw.w3-margin-right.w3-text-theme
+                                    span Administrador
+                            -if(user.nivel != 0)
+                                p
+                                    i.fa.fa-pencil.fa-fw.w3-margin-right.w3-text-theme
+                                    span=user.filiacao
+                    br
+                    // Features
+                    .w3-card.w3-round
+                        .w3-white
+                            button.w3-button.w3-block.w3-theme-l1.w3-left-align(onclick="myFunction('Demo2')")
+                                i.fa.fa-bars.fa-fw.w3-margin-right
+                                |  Features
+                            #Demo2.w3-hide.w3-container
+                               .w3-row-padding
+                                    ul
+                                        li
+                                            a(href="/users/meusRecursos") Meus recursos
+                                        li
+                                            a(href="/users/outrosRecursos") Outros recursos
+                                        // Para admin    
+                                        if(user.nivel == "0")    
+                                            li
+                                                a(href="/users/") Utilizadores    
+                                    br
+                    br            
+                // End Left Column
+                // Mid Column 
+                .w3-col.m7
+                    .w3-row-padding
+                        .w3-col.m12
+                            // Perfil do recurso
+                            .w3-card.23-round.w3-white
+                                .w3-container.w3-padding
+                                    h3.w3-center Ficheiro #{recurso.titulo}
+                                    .w3-container
+                                            p
+                                                i.fa.fa-file.fa-fw.w3-margin-right.w3-text-theme
+                                                | &nbsp;&nbsp;
+                                                u Título:
+                                                | &nbsp;
+                                                span
+                                                    a(href="/users/recurso/"+recurso._id)=recurso.titulo
+                                            if(recurso.subtitulo)
+                                                p
+                                                    i.fa.fa-file.fa-fw.w3-margin-right.w3-text-theme
+                                                    | &nbsp;&nbsp;
+                                                    u Subtítulo:
+                                                    | &nbsp;
+                                                    span=recurso.subtitulo
+                                            p
+                                                i.fa.fa-user.fa-fw.w3-margin-right.w3-text-theme
+                                                | &nbsp;&nbsp;
+                                                u Autor:
+                                                | &nbsp;
+                                                span=recurso.email_produtor
+                                            p    
+                                                i.fa.fa-book.fa-fw.w3-margin-right.w3-text-theme
+                                                | &nbsp;&nbsp;
+                                                u Tipo:
+                                                | &nbsp;
+                                                span=recurso.tipo.descricao
+                                            p
+                                                i.fa.fa-calendar-check-o.fa-fw.w3-margin-right.w3-text-theme
+                                                | &nbsp;&nbsp;
+                                                u Data de registo:
+                                                | &nbsp;
+                                                span=recurso.dataReg  
+                                            //Download
+                                            p
+                                                form(action='/users/download/'+recurso.nome method='POST')
+                                                  input.w3-btn.w3-theme-d2(type='submit' style="margin-top:10px; margin-bottom:10px" value='Download')
+                                            br
+                                            -var source = "/fileStore/" + recurso.nome
+                                            div.w3-center
+                                                embed(src=source width="500" height="500")  
+                                            br
+                                    .hr.w3-clear
+                                    // Avaliação 
+                                    div(class="rate")
+                                        if(aval == 5)
+                                           input(name="avaliacao" id="star5" type="radio" value="5" checked)
+                                        else
+                                           input(name="avaliacao" id="star5" type="radio" value="5")  
+                                        label(for="star5" title="text")
+                                        if(aval == 4)  
+                                           input(name="avaliacao" id="star4" type="radio" value="4" checked)
+                                        else  
+                                           input(name="avaliacao" id="star4" type="radio" value="4")
+                                        label(for="star4" title="text")
+                                        if(aval == 3) 
+                                           input(name="avaliacao" id="star3" type="radio" value="3" checked)
+                                        else
+                                           input(name="avaliacao" id="star3" type="radio" value="3")
+                                        label(for="star3" title="text")
+                                        if(aval == 2) 
+                                           input(name="avaliacao" id="star2" type="radio" value="2" checked)
+                                        else
+                                           input(name="avaliacao" id="star2" type="radio" value="2")
+                                        label(for="star2" title="text")
+                                        if(aval == 1)
+                                           input(name="avaliacao" id="star1" type="radio" value="1" checked)
+                                        else
+                                           input(name="avaliacao" id="star1" type="radio" value="1")
+                                        label(for="star1" title="text")
+                                        button.w3-button.w3-right.w3-theme.w3-round(style="margin-right:65px" class='avaliacao '+recurso._id)
+                                                i.fa.fa-star
+                                                |  Avaliar
+                                    // Comentarios        
+                                    button.w3-button.w3-margin-bottom(class="w3-hover-white" type='button' onclick="myFunction('Demo5')")
+                                            i.fa.fa-comment-o
+                                            |&nbsp;
+                                            = 'Comentarios (' +  recurso.comentarios.length +')'
+                                    each comentario in recurso.comentarios
+                                        .hr
+                                        div(class="txt-container")
+                                            .w3-container(style="width:460px;vertical-align:top")
+                                                p 
+                                                    each u in users
+                                                        -if(u.email == comentario.email_produtor)
+                                                            i.fa.fa-user.fa-fw.w3-margin-right.w3-text-theme
+                                                            b(style="color:#006683")=u.nome
+                                                .w3-border.w3-round.w3-light-grey
+                                                    div(style="margin-left:10px")
+                                                        p=comentario.descricao
+                                        br
+                                    #Demo5
+                                        .hr
+                                        .w3-container
+                                            textarea.w3-round.w3-light-grey(style='height:45px;width:460px; margin-top:10px; vertical-align:top' placeholder="Escreva um comentário...", id="comentario"+recurso._id)
+                                            button.w3-button.w3-right.w3-theme.w3-round(style="margin-right:65px" class='comentarios '+recurso._id)
+                                                i.fa.fa-comment-o
+                                                |  &nbsp;Comentar
+                                        br                                                                  
+                //End Mid
+                //Right
+                .w3-col.m2
+                    .w3-card.w3-round.w3-white
+                        button.w3-button.w3-block.w3-theme-l1.w3-left-align(onclick="myFunction('Demo3')")
+                            i.fa.fa-bars.fa-fw.w3-margin-right
+                            |  Notificações
+                        #Demo3.w3-hide.w3-container
+                            -var i = 0
+                            -var yes = false
+                            -if(notificacoes.length >= 1)
+                                -yes = true
+                            -if(yes)
+                            div
+                                ul
+                                    -while(i < notificacoes.length)
+                                        -var n = notificacoes[i]
+                                        li
+                                            w3.container(style="width:605px;vertical-align:top")
+                                                //i.fa.fa-file(style="color:#006683")
+                                                b Título: 
+                                                span
+                                                    a(href="/users/recurso/" + n.rec_id)=n.titulo
+                                                br
+                                                b Autor: 
+                                                span=n.nome_pub
+                                                br
+                                                -var data=n.data_pub.split('T')
+                                                -var df = data[0] + "," + data[1]
+                                                span=df
+                                                button
+                                                    -var query="?email="+user.email+"&rec_id="+n.rec_id
+                                                    -var url="http://localhost:8003/users/apagarNotificacao"+query
+                                                    a(href=`${url}`) Marcar como Visto
+                                        -i++
+
+  br   
+
+  script.
+        Array.from(document.getElementsByClassName('comentarios')).map(el => {
+                el.onclick = () => {
+                    var recurso_id = el.classList[el.classList.length-1];
+                    var comment = document.getElementById("comentario"+recurso_id).value
+                    var user_email = "#{user.email}";
+                    fetch("http://localhost:8003/users/recurso/"+recurso_id+"/comentario", {
+                        method: 'POST',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        redirect: 'follow',
+                        body: JSON.stringify({
+                            descricao: comment,
+                            email_produtor: user_email
+                        })
+                    }).then(r => window.location.assign("http://localhost:8003/users/recurso/"+recurso_id))
+                }
+            })
+
+        Array.from(document.getElementsByClassName('avaliacao')).map(el => {
+                el.onclick = () => {
+                    var recurso_id = el.classList[el.classList.length-1]
+                    var user_email = "#{user.email}"
+                    var aval
+                    if(document.getElementById('star5').checked){
+                        aval = document.getElementById("star5").value;
+                    }
+                    else if(document.getElementById('star4').checked){
+                        aval = document.getElementById("star4").value;
+                    }
+                    else if(document.getElementById('star3').checked){
+                        aval = document.getElementById("star3").value;
+                    }
+                    else if(document.getElementById('star2').checked){
+                        aval = document.getElementById("star2").value;
+                    }
+                    else if(document.getElementById('star1').checked){
+                        aval = document.getElementById("star1").value;
+                    }
+                    if(aval){
+                        fetch("http://localhost:8003/users/recurso/"+recurso_id+"/avaliacao", {
+                            method: 'POST',
+                            headers: {
+                                'Accept': 'application/json',
+                                'Content-Type': 'application/json'
+                            },
+                            redirect: 'follow',
+                            body: JSON.stringify({
+                                email_produtor: user_email,
+                                valor: aval
+                            })
+                        }).then(r => window.location.assign("http://localhost:8003/users/recurso/"+recurso_id))
+                    }
+                }
+            })    
+   
+    

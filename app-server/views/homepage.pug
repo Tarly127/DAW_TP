@@ -1,0 +1,215 @@
+extends layout
+
+block content
+  .w3-top
+        .w3-bar.w3-theme-d2.w3-left-align.w3-large
+            // Ao clicar neste botão ir para o feed
+            form(action='/users/home' method='GET')
+              button.w3-bar-item.w3-button.w3-padding-large.w3-hover-white(href='/users/home')
+                i.fa.fa-google.w3-margin-right
+                | myGoogleDrive
+            //Pesquisar    
+            .w3-bar-item.w3-hide-small.w3-padding-large(style='margin-left:42px')
+                .search-container
+                    form(action='/users/recursos/com')
+                        input(type='text' placeholder='Pesquisar título...' name='titulo')
+                        | &nbsp;
+                        button.w3-button.w3-hover-white(type='submit')
+                            i.fa.fa-search    
+            // Ao clicar neste botão ir para a página inicial (login/registo)
+            form(action='/users/logout' method='POST')
+                button.w3-bar-item.w3-button.w3-hide-small.w3-right.w3-padding-large.w3-hover-white(type='submit' title='Logout' style="background-color: Transparent;background-repeat:no-repeat;border: none;cursor:pointer;overflow: hidden;outline:none;")
+                    i.fa.fa-power-off
+  // Page Container
+  .w3-container.w3-content(style='max-width:1400px;margin-top:80px')
+            // The Grid
+            .w3-row
+                // Left column
+                .w3-col.m3
+                    // Perfil
+                    .w3-card.w3-round.w3-white
+                        h4.w3-center Perfil
+                        .w3-container
+                            p
+                               i.fa.fa-male.fa-fw.w3-margin-right.w3-text-theme
+                               span=user.nome
+                            p
+                               i.fa.fa-at.fa-fw.w3-margin-right.w3-text-theme
+                               span=user.email
+                            // Para o admin   
+                            -if(user.nivel == 0) 
+                                p
+                                    i.fa.fa-pencil.fa-fw.w3-margin-right.w3-text-theme
+                                    span Administrador
+                            -if(user.nivel != 0)
+                                p
+                                    i.fa.fa-pencil.fa-fw.w3-margin-right.w3-text-theme
+                                    span=user.filiacao
+
+                            
+                    br
+                    // Features
+                    .w3-card.w3-round
+                        .w3-white
+                            button.w3-button.w3-block.w3-theme-l1.w3-left-align(onclick="myFunction('Demo2')")
+                                i.fa.fa-bars.fa-fw.w3-margin-right
+                                |  Features
+                            #Demo2.w3-hide.w3-container
+                               .w3-row-padding
+                                    ul
+                                        li
+                                            a(href="/users/meusRecursos") Meus recursos
+                                        li
+                                            a(href="/users/outrosRecursos") Outros recursos
+                                        // Para admin    
+                                        if(user.nivel == "0")    
+                                            li
+                                                a(href="/users/") Utilizadores    
+                                    br
+                    br                
+                    // Filtrar
+                    .w3-card.w3-round
+                        .w3-white
+                            button.w3-button.w3-block.w3-theme-l1.w3-left-align(onclick="myFunction('Demo3')")
+                                i.fa.fa-bars.fa-fw.w3-margin-right
+                                |  Filtrar
+                            #Demo3.w3-hide.w3-container
+                               .w3-row-padding
+                                    ul
+                                        i Tipo:
+                                        -var j = 0    
+                                        -var checky = false
+                                        -while(!checky)
+                                            -if(j < tipos.length)
+                                                -var b = tipos[j]
+                                                    li
+                                                        a(href="/users/recursosTipo/"+b) #{b}
+                                                    -j++      
+                                            -else
+                                                -checky = true   
+                                        i Ano: 
+                                        -var i = 0    
+                                        -var check = false
+                                        -while(!check)
+                                            -if(i < anos.length)
+                                                -var a = anos[i]
+                                                    li
+                                                        a(href="/users/recursosAno/"+a) #{a}
+                                                    -i++      
+                                            -else
+                                                -check = true            
+                                    br
+                    br
+                    // Ordenar
+                    .w3-card.w3-round
+                        .w3-white
+                            button.w3-button.w3-block.w3-theme-l1.w3-left-align(onclick="myFunction('Demo4')")
+                                i.fa.fa-bars.fa-fw.w3-margin-right
+                                |  Ordenar
+                            #Demo4.w3-hide.w3-container
+                               .w3-row-padding
+                                    ul
+                                        li
+                                            a(href="/users/sortAutor") Autor
+                                        li
+                                            a(href="/users/sortClass") Classificação média
+                                        li
+                                            a(href="/users/sortData") Data de registo
+                                        li
+                                            a(href="/users/sortTipo") Tipo
+                                        li
+                                            a(href="/users/sortTitulo") Título       
+                                    br
+                    br                       
+                    br            
+                // End Left Column
+                // Mid Column 
+                .w3-col.m7
+                    .w3-row-padding
+                        .w3-col.m12
+                            .w3-card.23-round.w3-white
+                                .w3-container.w3-padding
+                                    h4.w3-center Adicionar Ficheiro
+                                    form.w3-container(action='/users/upload' method='POST' enctype="multipart/form-data")                                         
+                                        b.w3-text-theme Título
+                                        br(style="line-height:30px;")
+                                        input.w3-input.w3-border(name='titulo' type='text')
+                                        br
+                                        b.w3-text-theme Subtitulo(Opcional)
+                                        br(style="line-height:30px;")
+                                        input.w3-input.w3-border(name='subtitulo' type='text')
+                                        br
+                                        b.w3-text-theme Ficheiro
+                                        br(style="line-height:30px;")
+                                        .w3-border
+                                            input.w3-input(id='ficheiro' type='file' name='myFile')
+                                        br
+                                        b.w3-text-theme Tipo
+                                        br(style="line-height:30px;")
+                                        -var j = 0    
+                                        -var checky = false
+                                        <select name="tipo" id="tipo">
+                                          -while(!checky)
+                                            -if(j < tipos.length)
+                                                -var b = tipos[j]
+                                                    <option value="#{b}">#{b}</option>
+                                                    | &nbsp;"#{b}" &nbsp;&nbsp;
+                                                    -j++      
+                                            -else
+                                                -checky = true
+                                        </select>        
+                                        br
+                                        b.w3-text-theme Privacidade
+                                        br(style="line-height:30px;")
+                                        input(id="privacidade" name="privacidade" type="radio" value='true')
+                                        | &nbsp;Privada &nbsp;&nbsp;
+                                        input(id="privacidade" name="privacidade" type="radio" value='false')
+                                        | &nbsp;Pública &nbsp;&nbsp;
+                                        br
+                                        .w3-center
+                                            input.w3-btn.w3-theme-d2(type='submit' value='Confirmar')
+                                        br
+                            .w3-card.23-round.w3-white
+                                .w3-container.w3-padding            
+                                    h4.w3-center Adicionar Tipo
+                                    form.w3-container(action='/users/recurso/addTipo' method='POST')  
+                                        input.w3-input.w3-border(name='tipo' type='text') 
+                                        br 
+                                        .w3-center
+                                            input.w3-btn.w3-theme-d2(type='submit' value='Confimar')
+                                        br
+                //End Mid
+                //Right
+                .w3-col.m2
+                    .w3-card.w3-round.w3-white
+                        button.w3-button.w3-block.w3-theme-l1.w3-left-align(onclick="myFunction('Demo5')")
+                            i.fa.fa-bars.fa-fw.w3-margin-right
+                            |  Notificações
+                        #Demo5.w3-hide.w3-container
+                            -var i = 0
+                            -var yes = false
+                            -if(notificacoes.length >= 1)
+                                -yes = true
+                            -if(yes)
+                            div
+                                ul
+                                    -while(i < notificacoes.length)
+                                        -var n = notificacoes[i]
+                                        li
+                                            w3.container(style="width:605px;vertical-align:top")
+                                                //i.fa.fa-file(style="color:#006683")
+                                                b Título: 
+                                                span
+                                                    a(href="/users/recurso/" + n.rec_id)=n.titulo
+                                                br
+                                                b Autor: 
+                                                span=n.nome_pub
+                                                br
+                                                -var data=n.data_pub.split('T')
+                                                -var df = data[0] + "," + data[1]
+                                                span=df
+                                                button
+                                                    -var query="?email="+user.email+"&rec_id="+n.rec_id
+                                                    -var url="http://localhost:8003/users/apagarNotificacao"+query
+                                                    a(href=`${url}`) Marcar como Visto
+                                        -i++
